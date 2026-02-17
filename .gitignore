@@ -1,0 +1,6 @@
+node_modules/
+.vscode/
+.prettierrc
+.env
+INTERVIEW_GUIDE.md
+INTERVIEW_GUIDE_ADVANCED.md

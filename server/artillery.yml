@@ -1,0 +1,22 @@
+config:
+  target: "http://localhost:8000"
+  phases:
+    - duration: 30
+      arrivalRate: 10 
+
+scenarios:
+  - name: "Fetch Cars by City"
+    flow:
+      - get:
+          url: "/api/booking/availablecars"
+
+  - name: "Get all cars"
+    flow:
+      - get:
+          url: "/api/user/allcars" 
+
+  - name: "Get all bookings"
+    flow:
+      - get:
+          url: "/api/admin/allbookings" 
+ 
