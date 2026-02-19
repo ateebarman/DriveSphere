@@ -98,8 +98,8 @@ const HomeForm = () => {
       <Navbar toggle={toggle} setToggle={setToggle} />
 
       {/* Hero Section */}
-      <section className="relative w-full h-screen overflow-hidden flex items-center">
-        <div className="absolute inset-0">
+      <section className="relative w-full min-h-screen lg:h-screen overflow-visible lg:overflow-hidden flex items-center pt-28 lg:pt-0">
+        <div className="absolute inset-0 h-full w-full">
           <img
             src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&q=80&w=2070"
             className="w-full h-full object-cover"
@@ -109,7 +109,7 @@ const HomeForm = () => {
           <div className="absolute inset-0 bg-gradient-to-t from-surface-950 via-transparent to-transparent"></div>
         </div>
 
-        <div className="container mx-auto px-6 relative z-10 grid lg:grid-cols-2 gap-12 items-center pt-20 lg:pt-0">
+        <div className="container mx-auto px-6 relative z-10 grid lg:grid-cols-2 gap-12 items-center pb-20 lg:pb-0">
           <motion.div
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
@@ -180,7 +180,7 @@ const HomeForm = () => {
                 animate={{ opacity: 1, scale: 1, y: 0 }}
                 exit={{ opacity: 0, scale: 0.98, y: 15 }}
                 transition={{ type: "spring", duration: 0.5, bounce: 0 }}
-                className="lg:ml-auto w-full max-w-lg glass-card p-6 md:p-10 rounded-[2rem] md:rounded-[2.5rem] relative shadow-premium border-white/10"
+                className="lg:ml-auto w-full max-w-lg glass-card p-6 md:p-10 rounded-[2rem] md:rounded-[2.5rem] relative shadow-premium border-white/10 z-30 mb-8 lg:mb-0"
               >
                 <button
                   className="absolute top-6 right-6 md:top-8 md:right-8 p-2 rounded-full bg-white/5 hover:bg-white/10 text-white transition-all transform hover:rotate-90"
@@ -268,7 +268,7 @@ const HomeForm = () => {
       </section>
 
       {/* Stats Section */}
-      <section className="relative z-20 -mt-10 md:-mt-20 container mx-auto px-6 pb-20 md:pb-32">
+      <section className="relative z-20 -mt-6 lg:-mt-24 container mx-auto px-6 pb-20 md:pb-32">
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-8">
           {[
             { label: 'Vehicles', value: '450+', icon: HiOutlineLightningBolt, color: 'text-primary-400' },
