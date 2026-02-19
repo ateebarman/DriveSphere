@@ -14,6 +14,7 @@ const Navbar = ({ toggle, setToggle }) => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.app.user);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -25,6 +26,7 @@ const Navbar = ({ toggle, setToggle }) => {
 
   const handleLogin = () => {
     navigate("/login");
+    setIsMenuOpen(false);
   };
 
   const logoutHandler = async () => {
@@ -36,6 +38,7 @@ const Navbar = ({ toggle, setToggle }) => {
       dispatch(setUser(null));
       localStorage.removeItem("user");
       navigate("/");
+      setIsMenuOpen(false);
     } catch (error) {
       console.log(error);
     }
@@ -60,10 +63,12 @@ const Navbar = ({ toggle, setToggle }) => {
     } else {
       navigate("/userdash");
     }
+    setIsMenuOpen(false);
   };
 
   const handleLogoClick = () => {
     navigate("/");
+    setIsMenuOpen(false);
   };
 
   const handleToggle = () => {
@@ -72,14 +77,15 @@ const Navbar = ({ toggle, setToggle }) => {
     if (nextState) {
       window.scrollTo({ top: 0, behavior: "smooth" });
     }
+    setIsMenuOpen(false);
   };
 
   return (
     <motion.nav
       initial={{ y: -100 }}
       animate={{ y: 0 }}
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${isScrolled
-        ? "bg-surface-950/80 backdrop-blur-lg border-b border-white/10 py-3"
+      className={`fixed top-0 left-0 right-0 z-[100] transition-all duration-500 ${isScrolled || isMenuOpen
+        ? "bg-surface-950/90 backdrop-blur-xl border-b border-white/10 py-3"
         : "bg-transparent py-5"
         }`}
     >
@@ -134,10 +140,67 @@ const Navbar = ({ toggle, setToggle }) => {
         </div>
 
         {/* Mobile Menu Toggle */}
-        <button className="md:hidden text-white" onClick={() => {/* Add mobile menu logic if needed */ }}>
-          <HiMenuAlt3 size={28} />
+        <button
+          className="md:hidden text-white p-2 hover:bg-white/5 rounded-lg transition-colors"
+          onClick={() => setIsMenuOpen(!isMenuOpen)}
+        >
+          {isMenuOpen ? <HiX size={28} /> : <HiMenuAlt3 size={28} />}
         </button>
       </div>
+
+      {/* Mobile Menu Overlay */}
+      <AnimatePresence>
+        {isMenuOpen && (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: "auto" }}
+            exit={{ opacity: 0, height: 0 }}
+            className="md:hidden border-t border-white/10 bg-surface-950 overflow-hidden"
+          >
+            <div className="container mx-auto px-6 py-8 flex flex-col gap-6">
+              {user && (
+                <div className="flex items-center gap-4 p-4 bg-white/5 rounded-2xl border border-white/10">
+                  <CgProfile size="32px" className="text-primary-400" />
+                  <div>
+                    <p className="text-white font-bold">{user?.fullname}</p>
+                    <p className="text-surface-400 text-xs">{user?.role}</p>
+                  </div>
+                </div>
+              )}
+
+              <div className="flex flex-col gap-4">
+                {user && (
+                  <button
+                    onClick={handleDashboardClick}
+                    className="flex items-center justify-between p-4 text-white font-medium hover:bg-white/5 rounded-xl transition-colors"
+                  >
+                    <span>Dashboard</span>
+                    <HiMenuAlt3 className="text-primary-400 rotate-90" />
+                  </button>
+                )}
+
+                <button
+                  onClick={handleToggle}
+                  className="flex items-center justify-between p-4 text-white font-medium hover:bg-white/5 rounded-xl transition-colors"
+                >
+                  <span>{toggle ? "Close Search" : "Find a Car"}</span>
+                  <div className="w-2 h-2 rounded-full bg-primary-400" />
+                </button>
+
+                <button
+                  onClick={user ? logoutHandler : handleLogin}
+                  className={`w-full py-4 rounded-xl font-bold transition-all ${user
+                    ? "bg-white/5 text-white border border-white/10"
+                    : "bg-gradient-to-r from-primary-500 to-accent-500 text-white shadow-lg shadow-primary-500/20"
+                    }`}
+                >
+                  {user ? "Sign Out" : "Sign In"}
+                </button>
+              </div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </motion.nav>
   );
 };

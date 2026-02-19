@@ -17,7 +17,7 @@ import {
   HiMenuAlt2
 } from "react-icons/hi";
 
-const Sidebar = ({ isCollapsed, setIsCollapsed }) => {
+const Sidebar = ({ isCollapsed, setIsCollapsed, onOptionClick }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const user = useSelector((state) => state.app.user);
@@ -27,6 +27,7 @@ const Sidebar = ({ isCollapsed, setIsCollapsed }) => {
   const handleLogOut = () => {
     localStorage.removeItem("user");
     navigate("/login");
+    if (onOptionClick) onOptionClick();
   };
 
   const NavItem = ({ icon: Icon, label, onClick, active }) => (
@@ -65,13 +66,19 @@ const Sidebar = ({ isCollapsed, setIsCollapsed }) => {
     if (userRole === "admin") navigate("/admindash");
     else if (userRole === "carOwner") navigate("/carownerdash");
     else navigate("/userdash");
+    if (onOptionClick) onOptionClick();
+  };
+
+  const handleLogoClick = () => {
+    navigate("/");
+    if (onOptionClick) onOptionClick();
   };
 
   return (
     <div className="flex flex-col h-full py-8 px-6 select-none bg-surface-900 border-r border-white/5">
       {/* Brand Logo */}
       <div
-        onClick={() => navigate("/")}
+        onClick={handleLogoClick}
         className={`flex items-center gap-3 mb-12 px-2 cursor-pointer group ${isCollapsed ? "justify-center px-0" : ""}`}
       >
         <div className="w-10 h-10 bg-gradient-to-br from-primary-500 to-accent-600 rounded-xl flex items-center justify-center text-white font-black text-xl shadow-premium shrink-0">
