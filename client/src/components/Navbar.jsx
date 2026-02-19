@@ -47,7 +47,7 @@ const Navbar = ({ toggle, setToggle }) => {
   const handleDashboardClick = () => {
     if (!user) {
       const redirectPaths = {
-        userDash: "/userdash",
+        userDash: window.location.pathname === "/" ? "/cards" : window.location.pathname,
         adminDash: "/admindash",
         carOwnerDash: "/carownerdash",
       };

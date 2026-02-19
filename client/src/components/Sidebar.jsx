@@ -97,11 +97,30 @@ const Sidebar = ({ isCollapsed, setIsCollapsed, onOptionClick }) => {
       <div className="flex-1 overflow-y-auto pr-2 -mr-2 no-scrollbar">
         <ul className="space-y-1">
           <SectionHeader>Navigation</SectionHeader>
+          <NavItem
+            icon={HiOutlineLibrary}
+            label="Return Home"
+            active={false}
+            onClick={() => {
+              navigate("/");
+              if (onOptionClick) onOptionClick();
+            }}
+          />
+          <NavItem
+            icon={HiOutlineTruck}
+            label="Explore Fleet"
+            active={adminClickedOption === "Explore Fleet"}
+            onClick={() => {
+              dispatch(setClickedOption("Explore Fleet"));
+              navigate("/cards");
+              if (onOptionClick) onOptionClick();
+            }}
+          />
 
           {(userRole === "admin" || userRole === "carOwner") && (
             <NavItem
               icon={HiOutlineViewGrid}
-              label="Overview"
+              label="Dashboard"
               active={adminClickedOption === "dashboard"}
               onClick={() => handleOptionClick("dashboard")}
             />
@@ -109,39 +128,39 @@ const Sidebar = ({ isCollapsed, setIsCollapsed, onOptionClick }) => {
 
           {userRole === "admin" && (
             <>
-              <SectionHeader>Fleet</SectionHeader>
+              <SectionHeader>Fleet Management</SectionHeader>
               <NavItem icon={HiOutlineTruck} label="View All Cars" active={adminClickedOption === "View All Cars"} onClick={() => handleOptionClick("View All Cars")} />
               <NavItem icon={HiOutlinePlusCircle} label="Add New Car" active={adminClickedOption === "Add New Car"} onClick={() => handleOptionClick("Add New Car")} />
               <NavItem icon={HiOutlineTruck} label="Delete car" active={adminClickedOption === "Delete car"} onClick={() => handleOptionClick("Delete car")} />
 
-              <SectionHeader>Users</SectionHeader>
+              <SectionHeader>Personnel</SectionHeader>
               <NavItem icon={HiOutlineUsers} label="View All Users" active={adminClickedOption === "View All Users"} onClick={() => handleOptionClick("View All Users")} />
               <NavItem icon={HiOutlineUsers} label="Change User Role" active={adminClickedOption === "Change User Role"} onClick={() => handleOptionClick("Change User Role")} />
               <NavItem icon={HiOutlineUsers} label="Get User" active={adminClickedOption === "Get User"} onClick={() => handleOptionClick("Get User")} />
               <NavItem icon={HiOutlineUsers} label="Delete User" active={adminClickedOption === "Delete User"} onClick={() => handleOptionClick("Delete User")} />
 
-              <SectionHeader>Bookings</SectionHeader>
+              <SectionHeader>Operations</SectionHeader>
               <NavItem icon={HiOutlineBookOpen} label="View All Bookings" active={adminClickedOption === "View All Bookings"} onClick={() => handleOptionClick("View All Bookings")} />
             </>
           )}
 
           {userRole === "carOwner" && (
             <>
-              <SectionHeader>Assets</SectionHeader>
+              <SectionHeader>My Assets</SectionHeader>
               <NavItem icon={HiOutlinePlusCircle} label="Add Car" active={adminClickedOption === "addcar"} onClick={() => handleOptionClick("addcar")} />
               <NavItem icon={HiOutlineLibrary} label="My Fleet" active={adminClickedOption === "ownedcars"} onClick={() => handleOptionClick("ownedcars")} />
               <NavItem icon={HiOutlineClipboardList} label="Requests" active={adminClickedOption === "OwnerBookingDetails"} onClick={() => handleOptionClick("OwnerBookingDetails")} />
-              <SectionHeader>Prefs</SectionHeader>
+              <SectionHeader>Preferences</SectionHeader>
               <NavItem icon={HiOutlineCog} label="Settings" active={adminClickedOption === "Deletecarowner"} onClick={() => handleOptionClick("Deletecarowner")} />
             </>
           )}
 
           {userRole === "user" && (
             <>
-              <SectionHeader>Personal</SectionHeader>
+              <SectionHeader>User Account</SectionHeader>
               <NavItem icon={HiOutlineUserCircle} label="Profile" active={adminClickedOption === "profile"} onClick={() => handleOptionClick("profile")} />
-              <NavItem icon={HiOutlineBookOpen} label="Bookings" active={adminClickedOption === "booking"} onClick={() => handleOptionClick("booking")} />
-              <SectionHeader>Prefs</SectionHeader>
+              <NavItem icon={HiOutlineBookOpen} label="My Bookings" active={adminClickedOption === "booking"} onClick={() => handleOptionClick("booking")} />
+              <SectionHeader>Preferences</SectionHeader>
               <NavItem icon={HiOutlineCog} label="Settings" active={adminClickedOption === "Delete User"} onClick={() => handleOptionClick("Delete User")} />
             </>
           )}

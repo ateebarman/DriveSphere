@@ -1,10 +1,11 @@
 import { useState } from "react";
-import { Outlet } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 import Sidebar from "../Sidebar";
 import { motion, AnimatePresence } from "framer-motion";
 import { HiMenuAlt2, HiChevronLeft } from "react-icons/hi";
 
 const AppLayout = () => {
+    const navigate = useNavigate();
     const [isCollapsed, setIsCollapsed] = useState(false);
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
@@ -12,8 +13,11 @@ const AppLayout = () => {
         <div className="flex flex-col lg:flex-row h-screen bg-surface-950 overflow-hidden">
             {/* Mobile Top Bar */}
             <div className="lg:hidden flex items-center justify-between px-6 py-4 bg-surface-900 border-b border-white/5 z-[60]">
-                <div className="flex items-center gap-2">
-                    <div className="w-8 h-8 bg-gradient-to-br from-primary-500 to-accent-500 rounded-lg flex items-center justify-center text-white font-bold shadow-lg">
+                <div
+                    onClick={() => navigate("/")}
+                    className="flex items-center gap-2 cursor-pointer group"
+                >
+                    <div className="w-8 h-8 bg-gradient-to-br from-primary-500 to-accent-500 rounded-lg flex items-center justify-center text-white font-bold shadow-lg group-hover:scale-110 transition-transform">
                         D
                     </div>
                     <span className="text-white font-display font-bold tracking-tight">DriveSphere</span>

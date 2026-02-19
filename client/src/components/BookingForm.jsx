@@ -119,8 +119,8 @@ const BookingForm = () => {
   const duration = durationFunc(formData.rentalStartDate, formData.rentalEndDate);
 
   return (
-    <div className="min-h-screen bg-surface-950 pt-32 pb-20 px-6">
-      <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+    <div className="min-h-full bg-surface-950 pb-20">
+      <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
 
         {/* Car Overview */}
         <motion.div

@@ -105,41 +105,30 @@ app.use(helmet());
 app.use(express.json());
 app.use(cookieParser());
 
-// CORS
-// const corsOptions = {
-//   origin: "http://localhost:5173",
-//   credentials: true,
-// };
-
-// // app.use(cors(corsOptions));
-
-// app.use(cors(corsOptions));
-
-// const corsOptions = {
-//   origin: [
-//    'car-rental-git-vedant-vedant-nikams-projects.vercel.app',
-//    'http://localhost:5173'  // Keep local development URL
-//  ],
-//  credentials: true,
-// };
-// app.use(cors(corsOptions));
+// CORS configuration
+const allowedOrigins = [
+  "http://localhost:5173",
+  "http://127.0.0.1:5173",
+  "https://drivesphere.vercel.app",
+  "https://drive-sphere.vercel.app",
+  process.env.FRONTEND_URL
+].filter(Boolean);
 
 const corsOptions = {
-  origin: [
-   process.env.FRONTEND_URL || 'http://localhost:5173',
-   'https://drivesphere.vercel.app'
- ], 
- credentials: true,
+  origin: (origin, callback) => {
+    if (!origin || allowedOrigins.indexOf(origin) !== -1 || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
+  credentials: true,
+  methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization", "X-Requested-With", "Accept"],
 };
+
 app.use(cors(corsOptions));
-app.options('*', cors(corsOptions));
-
-// const corsOptions = {
-//   origin: true, // Reflects the request origin, which is safest for Swagger UI
-//   credentials: true,
-// };
-
-// app.use(cors(corsOptions));
+app.options("*", cors(corsOptions));
 
 const swaggerOptions = {
   swaggerDefinition: {

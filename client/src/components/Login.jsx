@@ -58,10 +58,19 @@ export const Login = () => {
           const userRole = res.data.user.role;
           const redirectPaths = JSON.parse(localStorage.getItem("redirectPath")) || {};
           let redirectPath;
-          if (userRole === "user") redirectPath = redirectPaths.userDash || "/userdash";
-          else if (userRole === "admin") redirectPath = redirectPaths.adminDash || "/admindash";
-          else if (userRole === "carOwner") redirectPath = redirectPaths.carOwnerDash || "/carownerdash";
-          else redirectPath = "/";
+
+          if (userRole === "user") {
+            // Priority 1: Specifically stored redirect path (e.g. from a booking attempt)
+            // Priority 2: If they were just browsing, go back to cards
+            // Priority 3: Default to user dashboard
+            redirectPath = redirectPaths.userDash || "/userdash";
+          } else if (userRole === "admin") {
+            redirectPath = redirectPaths.adminDash || "/admindash";
+          } else if (userRole === "carOwner") {
+            redirectPath = redirectPaths.carOwnerDash || "/carownerdash";
+          } else {
+            redirectPath = "/";
+          }
 
           navigate(redirectPath);
           localStorage.removeItem("redirectPath");
